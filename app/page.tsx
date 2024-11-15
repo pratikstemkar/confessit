@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { EllipsisIcon, Heart } from "lucide-react";
 import CommentDialog from "./_components/CommentDialog";
+import { Input } from "@/components/ui/input";
 
 export default function Home() {
     return (
@@ -16,17 +17,18 @@ export default function Home() {
             <div className="flex gap-5">
                 <div className="flex flex-col gap-5">
                     <div className="flex flex-col items-center gap-2">
-                        <div className="w-1/2">
-                            <span className="text-xl font-bold">
-                                Who are you?
-                            </span>
+                        <div className="w-1/2 flex flex-col gap-2">
+                            <div className="flex flex-col">
+                                <span className="text-xl font-bold">
+                                    Who are you?
+                                </span>
+                                <span className="text-muted-foreground text-sm">
+                                    Enter your anonymous name to see other
+                                    confessions
+                                </span>
+                            </div>
                             <div>
-                                Lorem ipsum, dolor sit amet consectetur
-                                adipisicing elit. Facere voluptatum praesentium
-                                saepe iste, explicabo soluta eaque ratione?
-                                Molestiae similique pariatur provident
-                                temporibus dolore laboriosam consectetur quod.
-                                Voluptatibus iure iusto eaque!
+                                <Input placeholder="Enter your name" />
                             </div>
                             <Button>START</Button>
                         </div>
