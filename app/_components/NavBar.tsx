@@ -6,9 +6,10 @@ import { Chivo } from "next/font/google";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import CreatePostDialog from "./CreatePostDialog";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
-import { LogOutIcon } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { LogInIcon } from "lucide-react";
 
 const chivo = Chivo({
     subsets: ["latin"],
@@ -47,14 +48,22 @@ const NavBar = () => {
                             <Button
                                 asChild
                                 className="rounded-full"
+                                variant="ghost"
+                                size="icon"
+                                title="Sign In"
                             >
-                                <Link href="/create-profile">
-                                    Create Profile
+                                <Link href="/login">
+                                    <LogInIcon className="h-4 w-4" />
                                 </Link>
                             </Button>
                         </>
                     )}
-                    {status === "loading" && <>Loading...</>}
+                    {status === "loading" && (
+                        <>
+                            <Skeleton className="rounded-full h-9 w-9" />
+                            <Skeleton className="rounded-full h-9 w-9" />
+                        </>
+                    )}
                     {status === "authenticated" && (
                         <>
                             <CreatePostDialog />
@@ -69,15 +78,6 @@ const NavBar = () => {
                                     </AvatarFallback>
                                 </Avatar>
                             </Link>
-                            <Button
-                                variant="ghost"
-                                size="icon"
-                                className="rounded-full"
-                                onClick={() => signOut()}
-                                title="Logout"
-                            >
-                                <LogOutIcon className="h-4 w-4" />
-                            </Button>
                         </>
                     )}
                     <ThemeToggle />

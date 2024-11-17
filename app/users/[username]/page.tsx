@@ -1,3 +1,4 @@
+import LogoutButton from "@/app/_components/LogoutButton";
 import ProfileTabs from "@/app/_components/ProfileTabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
@@ -7,7 +8,7 @@ const UserPage = ({ params }: { params: { username: string } }) => {
     return (
         <main className="max-w-5xl m-auto mt-10 px-5 lg:px-0">
             <div className="flex flex-col space-y-5">
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between">
                     <div className="flex space-x-5 items-center">
                         <Avatar className="h-28 w-28">
                             <AvatarImage src="/avatars/woman/8.png" />
@@ -44,6 +45,7 @@ const UserPage = ({ params }: { params: { username: string } }) => {
                             </div>
                         </div>
                     </div>
+                    <LogoutButton username={params.username} />
                 </div>
                 <Separator />
                 <section className="flex flex-col space-y-2">

@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { usePathname } from "next/navigation";
 
 const formSchema = z.object({
     username: z.string().min(4, {
@@ -27,10 +28,12 @@ const formSchema = z.object({
 });
 
 export function LoginForm() {
+    const pathname = usePathname();
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            username: "",
+            username: pathname,
             password: "",
         },
     });
@@ -56,7 +59,7 @@ export function LoginForm() {
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8"
+                className="space-y-4"
             >
                 <FormField
                     control={form.control}

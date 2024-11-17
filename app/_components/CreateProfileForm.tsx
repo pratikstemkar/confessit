@@ -17,6 +17,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { RotateCcw } from "lucide-react";
 import Link from "next/link";
+import { generateUniqueUsername } from "@/lib/utils";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    // SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 
 const formSchema = z.object({
     username: z
@@ -39,6 +49,7 @@ const formSchema = z.object({
     from: z.string(),
     music: z.string(),
     movie: z.string(),
+    gender: z.string(),
     password: z
         .string()
         .min(6, {
@@ -50,7 +61,6 @@ const formSchema = z.object({
 });
 
 export function CreateProfileForm() {
-    // 1. Define your form.
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -61,21 +71,24 @@ export function CreateProfileForm() {
             music: "",
             movie: "",
             password: "",
+            gender: "",
         },
     });
 
-    // 2. Define a submit handler.
     function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
         console.log(values);
     }
+
+    const handleUsernameBtn = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        form.setValue("username", generateUniqueUsername());
+    };
 
     return (
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8"
+                className="space-y-4"
             >
                 <FormField
                     control={form.control}
@@ -94,6 +107,7 @@ export function CreateProfileForm() {
                                     variant="ghost"
                                     size="icon"
                                     title="Generate an anonymous username"
+                                    onClick={handleUsernameBtn}
                                 >
                                     <RotateCcw className="h-4 w-4" />
                                 </Button>
@@ -190,6 +204,49 @@ export function CreateProfileForm() {
                         )}
                     />
                 </div>
+                <FormField
+                    control={form.control}
+                    name="gender"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Gender</FormLabel>
+                            <FormControl>
+                                <Select {...field}>
+                                    <SelectTrigger className="w-full">
+                                        <SelectValue placeholder="Select a gender" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            <SelectItem
+                                                value="man"
+                                                onSelect={() =>
+                                                    form.setValue(
+                                                        "gender",
+                                                        "man"
+                                                    )
+                                                }
+                                            >
+                                                Man
+                                            </SelectItem>
+                                            <SelectItem
+                                                value="woman"
+                                                onSelect={() =>
+                                                    form.setValue(
+                                                        "gender",
+                                                        "woman"
+                                                    )
+                                                }
+                                            >
+                                                Woman
+                                            </SelectItem>
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
                 <FormField
                     control={form.control}
                     name="password"

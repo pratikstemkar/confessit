@@ -98,6 +98,7 @@ export const options: NextAuthOptions = {
     },
     pages: {
         signIn: "/login",
+        error: "/login",
     },
     adapter: MongoDBAdapter(clientPromise) as Adapter,
     session: { strategy: "jwt" },
