@@ -10,7 +10,7 @@ const PostCard = () => {
         <div className="px-4 py-4 rounded-3xl border">
             <div className="flex flex-col space-y-2">
                 <div className="flex justify-between items-center">
-                    <div className="flex space-x-1 items-center">
+                    <div className="flex space-x-2 items-center">
                         <Avatar>
                             <AvatarImage
                                 src="/avatars/woman/8.png"
@@ -20,6 +20,9 @@ const PostCard = () => {
                         </Avatar>
                         <span className="font-semibold text-md lg:text-lg">
                             red-panda
+                        </span>
+                        <span className="text-xs text-muted-foreground">
+                            at 12:24 PM
                         </span>
                     </div>
                     <div>
@@ -52,7 +55,7 @@ const PostCard = () => {
                                 label="heart"
                             />
                         </Button>
-                        <Button
+                        {/* <Button
                             variant="ghost"
                             className="rounded-full"
                         >
@@ -60,7 +63,7 @@ const PostCard = () => {
                                 symbol="🔥"
                                 label="fire"
                             />
-                        </Button>
+                        </Button> */}
                         <Button
                             variant="ghost"
                             className="rounded-full"
