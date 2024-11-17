@@ -17,7 +17,10 @@ const PostDialog = () => {
     return (
         <Dialog>
             <DialogTrigger>
-                <span className="text-primary hover:underline underline-offset-2">
+                <span
+                    className="text-primary hover:underline underline-offset-2"
+                    title="Read complete post"
+                >
                     Read More
                 </span>
             </DialogTrigger>
@@ -63,7 +66,7 @@ const PostDialog = () => {
                             </div>
                             <div className="flex justify-between">
                                 <div className="flex flex-wrap gap-2">
-                                    <Button
+                                    {/* <Button
                                         variant="ghost"
                                         className="rounded-full hover:border border-primary"
                                     >
@@ -72,7 +75,7 @@ const PostDialog = () => {
                                             symbol="❤️"
                                             label="heart"
                                         />
-                                    </Button>
+                                    </Button> */}
                                     <Button
                                         variant="ghost"
                                         className="rounded-full"

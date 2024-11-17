@@ -29,7 +29,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+                className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col justify-between h-screen`}
             >
                 <ThemeProvider
                     attribute="class"
@@ -37,10 +37,12 @@ export default function RootLayout({
                     enableSystem
                     disableTransitionOnChange
                 >
-                    <div className="px-2 lg:px-0 sticky top-5 z-10">
-                        <NavBar />
+                    <div>
+                        <div className="px-2 lg:px-0 sticky top-5 z-10">
+                            <NavBar />
+                        </div>
+                        {children}
                     </div>
-                    {children}
                     <Footer />
                 </ThemeProvider>
             </body>

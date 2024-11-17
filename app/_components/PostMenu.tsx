@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
@@ -6,6 +8,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { BookmarkIcon, EllipsisIcon, FlagIcon, Trash2Icon } from "lucide-react";
+import ReportDialog from "./ReportDialog";
 
 const PostMenu = () => {
     return (
@@ -24,9 +27,11 @@ const PostMenu = () => {
                     <BookmarkIcon className="h-4 w-4" />
                     <span>Bookmark</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="hover:cursor-pointer">
-                    <FlagIcon className="h-4 w-4" />
-                    <span>Report</span>
+                <DropdownMenuItem
+                    className="hover:cursor-pointer"
+                    onSelect={e => e.preventDefault()}
+                >
+                    <ReportDialog />
                 </DropdownMenuItem>
                 <DropdownMenuItem className="text-red-500 hover:cursor-pointer">
                     <Trash2Icon className="h-4 w-4" />

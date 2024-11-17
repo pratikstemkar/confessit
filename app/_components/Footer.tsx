@@ -5,7 +5,7 @@ import Link from "next/link";
 const Footer = () => {
     return (
         <footer className="flex w-full justify-center items-center py-5 mt-5">
-            <span className="font-mono text-muted-foreground">
+            <span className="text-sm font-mono text-muted-foreground">
                 Developed with{" "}
                 <Emoji
                     symbol="❤️"
@@ -17,7 +17,10 @@ const Footer = () => {
                 href="https://x.com/pratikstemkar"
                 target="_blank"
             >
-                <Avatar className="h-9 w-9 ml-2">
+                <Avatar
+                    className="h-8 w-8 ml-2"
+                    title="Pratik Temkar"
+                >
                     <AvatarImage src="https://github.com/pratikstemkar.png" />
                     <AvatarFallback>PT</AvatarFallback>
                 </Avatar>

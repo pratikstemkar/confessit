@@ -46,7 +46,7 @@ const PostCard = () => {
                 </div>
                 <div className="flex justify-between">
                     <div className="flex flex-wrap gap-2">
-                        <Button
+                        {/* <Button
                             variant="ghost"
                             className="rounded-full hover:border border-primary"
                         >
@@ -54,19 +54,21 @@ const PostCard = () => {
                                 symbol="❤️"
                                 label="heart"
                             />
-                        </Button>
-                        {/* <Button
+                        </Button> */}
+                        <Button
                             variant="ghost"
                             className="rounded-full"
+                            title="Hot"
                         >
                             <Emoji
                                 symbol="🔥"
                                 label="fire"
                             />
-                        </Button> */}
+                        </Button>
                         <Button
                             variant="ghost"
                             className="rounded-full"
+                            title="Funny"
                         >
                             <Emoji
                                 symbol="😂"
@@ -76,6 +78,7 @@ const PostCard = () => {
                         <Button
                             variant="ghost"
                             className="rounded-full"
+                            title="Shock"
                         >
                             <Emoji
                                 symbol="😱"

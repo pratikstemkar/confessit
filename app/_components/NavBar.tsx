@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Chivo } from "next/font/google";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import CreatePostDialog from "./CreatePostDialog";
 
 const chivo = Chivo({
     subsets: ["latin"],
@@ -32,10 +33,16 @@ const NavBar = () => {
                     </span>
                 </Link>
                 <div className="flex space-x-2 items-center">
-                    <Avatar className="h-9 w-9 hover:cursor-pointer">
-                        <AvatarImage src="https://github.com/pratikstemkar.png" />
-                        <AvatarFallback>Haha</AvatarFallback>
-                    </Avatar>
+                    <CreatePostDialog />
+                    <Link
+                        href="/user/red-panda"
+                        title="Your Profile"
+                    >
+                        <Avatar className="h-9 w-9">
+                            <AvatarImage src="/avatars/woman/8.png" />
+                            <AvatarFallback>Haha</AvatarFallback>
+                        </Avatar>
+                    </Link>
                     <ThemeToggle />
                 </div>
             </div>
