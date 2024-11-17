@@ -1,4 +1,3 @@
-import PostCard from "@/app/_components/PostCard";
 import ProfileTabs from "@/app/_components/ProfileTabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
@@ -20,7 +19,7 @@ const UserPage = ({ params }: { params: { username: string } }) => {
                                     {params.username}
                                 </span>
                                 <span className="text-sm text-muted-foreground line-clamp-2">
-                                    We won't tell a soul!
+                                    We won&apos;t tell a soul!
                                 </span>
                             </div>
                             <div className="flex gap-x-5 text-muted-foreground flex-wrap">

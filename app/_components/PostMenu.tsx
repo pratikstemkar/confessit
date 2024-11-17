@@ -7,7 +7,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { BookmarkIcon, EllipsisIcon, FlagIcon, Trash2Icon } from "lucide-react";
+import { BookmarkIcon, EllipsisIcon, Trash2Icon } from "lucide-react";
 import ReportDialog from "./ReportDialog";
 
 const PostMenu = () => {
