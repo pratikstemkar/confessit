@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { Button } from "@/components/ui/button";
+import NavBar from "./_components/NavBar";
+import { ThemeProvider } from "@/components/ui/theme-provider";
 
 const geistSans = localFont({
     src: "./fonts/GeistVF.woff",
@@ -15,8 +16,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-    title: "Confess It",
-    description: "Confess everything!",
+    title: "Spill It: We won't tell anyone!",
+    description: "Spill the beans. We won't tell anyone!",
 };
 
 export default function RootLayout({
@@ -29,17 +30,17 @@ export default function RootLayout({
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
-                <nav className="flex justify-between items-center px-5 py-2">
-                    <div>
-                        <span className="text-2xl font-bold tracking-tighter">
-                            ConfessIt
-                        </span>
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange
+                >
+                    <div className="px-2 lg:px-0 sticky top-5 z-10">
+                        <NavBar />
                     </div>
-                    <div>
-                        <Button>About</Button>
-                    </div>
-                </nav>
-                {children}
+                    {children}
+                </ThemeProvider>
             </body>
         </html>
     );
