@@ -14,7 +14,11 @@ export function ThemeToggle() {
             variant="ghost"
             size="icon"
             onClick={() => {
-                theme === "light" ? setTheme("dark") : setTheme("light");
+                if (theme === "light") {
+                    setTheme("dark");
+                } else {
+                    setTheme("light");
+                }
             }}
             className="rounded-full"
         >
