@@ -35,7 +35,7 @@ const NavBar = () => {
                 <div className="flex space-x-2 items-center">
                     <CreatePostDialog />
                     <Link
-                        href="/user/red-panda"
+                        href="/users/red-panda"
                         title="Your Profile"
                     >
                         <Avatar className="h-9 w-9">

@@ -17,8 +17,9 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-    title: "Spill It: We won't tell anyone!",
-    description: "Spill the beans. We won't tell anyone!",
+    title: "Spill It: We won't tell a soul!",
+    description:
+        "Share your secrets and know what others have to hide. Everything anonymously.",
 };
 
 export default function RootLayout({
