@@ -1,16 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
-import dbConnect from "@/lib/mongodb";
+import { dbConnect } from "@/lib/mongodb";
 import User from "@/lib/models/user.model";
 import bcrypt from "bcrypt";
+import { getRandomNumber } from "@/lib/utils";
 
 export async function POST(req: NextRequest) {
-    const { name, username, image, email, password } = await req.json();
+    const { username, bio, password, location, from, music, movie, gender } =
+        await req.json();
     const user = {
-        name,
         username,
-        image,
-        email,
+        bio,
         password: (await bcrypt.hash(password, 10)).toString(),
+        location,
+        from,
+        music,
+        movie,
+        gender,
+        avatar: `/avatars/${gender}/${
+            gender === "man" ? getRandomNumber(20) : getRandomNumber(24)
+        }.png`,
     };
 
     try {

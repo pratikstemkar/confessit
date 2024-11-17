@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { signIn } from "next-auth/react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -14,6 +15,7 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 
 const formSchema = z.object({
     username: z.string().min(4, {
@@ -33,11 +35,22 @@ export function LoginForm() {
         },
     });
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values);
-    }
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        await signIn("credentials", {
+            username: values.username,
+            password: values.password,
+            redirect: true,
+            callbackUrl: "/",
+        }).catch(() => {
+            toast("Login Failed!", {
+                description: "Sunday, December 03, 2023 at 9:00 AM",
+                action: {
+                    label: "Undo",
+                    onClick: () => console.log("Undo"),
+                },
+            });
+        });
+    };
 
     return (
         <Form {...form}>
