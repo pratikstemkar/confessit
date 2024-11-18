@@ -7,7 +7,7 @@ import Link from "next/link";
 
 const PostCard = () => {
     return (
-        <div className="px-4 py-4 rounded-3xl border hover:cursor-pointer">
+        <div className={`px-4 py-4 rounded-3xl border hover:cursor-pointer`}>
             <div className="flex flex-col space-y-2">
                 <div className="flex justify-between items-center">
                     <div className="flex space-x-2 items-center">
