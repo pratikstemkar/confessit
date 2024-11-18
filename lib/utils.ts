@@ -28,3 +28,17 @@ export function generateUniqueUsername(): string {
     // Generate the username based on the config
     return uniqueNamesGenerator(config);
 }
+
+export async function getUser(username: string) {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_APP_URL}/api/users/${username}`,
+        {
+            next: { revalidate: 60 },
+        }
+    );
+    if (!res.ok) {
+        throw new Error("User not Found!");
+    }
+
+    return res.json();
+}

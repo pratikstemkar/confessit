@@ -101,7 +101,7 @@ export function LoginForm() {
                     )}
                 />
                 {error !== undefined && error !== null && (
-                    <div className="flex justify-center items-center py-2 border border-red-500 rounded-lg text-sm text-red-500 bg-red-100 bg-opacity-50">
+                    <div className="flex justify-center items-center p-2 border border-red-500 rounded-lg text-sm text-red-500 bg-red-100 bg-opacity-50">
                         {error}
                     </div>
                 )}

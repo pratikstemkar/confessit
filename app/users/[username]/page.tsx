@@ -1,14 +1,16 @@
-"use client";
-
 import LogoutButton from "@/app/_components/LogoutButton";
 import ProfileTabs from "@/app/_components/ProfileTabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
+import { getUser } from "@/lib/utils";
 import { Clapperboard, HouseIcon, MapPinIcon, MusicIcon } from "lucide-react";
-import { useSession } from "next-auth/react";
+import { notFound } from "next/navigation";
 
-const UserPage = ({ params }: { params: { username: string } }) => {
-    const { data: session } = useSession();
+const UserPage = async ({ params }: { params: { username: string } }) => {
+    const foundUser = await getUser(params.username);
+    if (!foundUser) {
+        notFound();
+    }
 
     return (
         <main className="max-w-5xl m-auto mt-10 px-5 lg:px-0">
@@ -16,9 +18,9 @@ const UserPage = ({ params }: { params: { username: string } }) => {
                 <div className="flex justify-between">
                     <div className="flex space-x-5 items-center">
                         <Avatar className="h-28 w-28">
-                            <AvatarImage src={session?.user.avatar} />
+                            <AvatarImage src={foundUser?.user.avatar} />
                             <AvatarFallback>
-                                {session?.user.username}
+                                {foundUser?.user.username}
                             </AvatarFallback>
                         </Avatar>
                         <div className="flex flex-col space-y-2">
@@ -27,27 +29,29 @@ const UserPage = ({ params }: { params: { username: string } }) => {
                                     {params.username}
                                 </span>
                                 <span className="text-sm text-muted-foreground line-clamp-2">
-                                    {session?.user.bio}
+                                    {foundUser?.user.bio}
                                 </span>
                             </div>
                             <div className="flex gap-x-5 text-muted-foreground flex-wrap">
                                 <div className="flex space-x-1 items-center">
                                     <MapPinIcon className="h-4 w-4" />
-                                    <span>{session?.user.location}</span>
+                                    <span>{foundUser?.user.location}</span>
                                 </div>
                                 <div className="flex space-x-1 items-center">
                                     <HouseIcon className="h-4 w-4" />
-                                    <span>{session?.user.from}</span>
+                                    <span>{foundUser?.user.from}</span>
                                 </div>
                             </div>
                             <div className="flex gap-x-5 text-muted-foreground flex-wrap">
                                 <div className="flex space-x-1 items-center">
                                     <MusicIcon className="h-4 w-4" />
-                                    <span>{session?.user.music}</span>
+                                    <span className="">
+                                        {foundUser?.user.music}
+                                    </span>
                                 </div>
                                 <div className="flex space-x-1 items-center">
                                     <Clapperboard className="h-4 w-4" />
-                                    <span>{session?.user.movie}</span>
+                                    <span>{foundUser?.user.movie}</span>
                                 </div>
                             </div>
                         </div>

@@ -15,9 +15,14 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { RotateCcw } from "lucide-react";
+import {
+    Check,
+    ChevronsUpDownIcon,
+    Loader2Icon,
+    RotateCcw,
+} from "lucide-react";
 import Link from "next/link";
-import { generateUniqueUsername } from "@/lib/utils";
+import { cn, generateUniqueUsername } from "@/lib/utils";
 import {
     Select,
     SelectContent,
@@ -27,6 +32,25 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList,
+} from "@/components/ui/command";
+import { cities } from "@/data/cities";
+import { songs } from "@/data/songs";
+import { movies } from "@/data/movies";
+import axios from "axios";
+import { signIn } from "next-auth/react";
+import { useState } from "react";
 
 const formSchema = z.object({
     username: z
@@ -45,11 +69,11 @@ const formSchema = z.object({
         .max(50, {
             message: "Bio must be atmax 50 characters.",
         }),
-    location: z.string(),
-    from: z.string(),
-    music: z.string(),
-    movie: z.string(),
-    gender: z.string(),
+    location: z.string().min(3),
+    from: z.string().min(3),
+    music: z.string().min(3),
+    movie: z.string().min(3),
+    gender: z.string().min(3),
     password: z
         .string()
         .min(6, {
@@ -61,6 +85,9 @@ const formSchema = z.object({
 });
 
 export function CreateProfileForm() {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -75,9 +102,31 @@ export function CreateProfileForm() {
         },
     });
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values);
-    }
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        setLoading(true);
+        await axios
+            .post(`${process.env.NEXT_PUBLIC_APP_URL}/api/users`, {
+                username: values.username,
+                bio: values.bio,
+                location: values.location,
+                from: values.from,
+                music: values.music,
+                movie: values.movie,
+                password: values.password,
+                gender: values.gender,
+            })
+            .then(async () => {
+                await signIn("credentials", {
+                    username: values.username,
+                    password: values.password,
+                    redirect: true,
+                    callbackUrl: "/",
+                });
+                setError("");
+            })
+            .catch(e => setError(e.response.data.message));
+        setLoading(false);
+    };
 
     const handleUsernameBtn = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -143,12 +192,65 @@ export function CreateProfileForm() {
                         render={({ field }) => (
                             <FormItem className="w-full">
                                 <FormLabel>Current City</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        placeholder="Where are you currently?"
-                                        {...field}
-                                    />
-                                </FormControl>
+                                <Popover>
+                                    <PopoverTrigger asChild>
+                                        <FormControl>
+                                            <Button
+                                                variant="outline"
+                                                role="combobox"
+                                                className={cn(
+                                                    "w-full justify-between",
+                                                    !field.value &&
+                                                        "text-muted-foreground"
+                                                )}
+                                            >
+                                                {field.value
+                                                    ? cities.find(
+                                                          city =>
+                                                              city.value ===
+                                                              field.value
+                                                      )?.label
+                                                    : "Where do you live?"}
+                                                <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                            </Button>
+                                        </FormControl>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-full p-0">
+                                        <Command>
+                                            <CommandInput placeholder="Search city..." />
+                                            <CommandList>
+                                                <CommandEmpty>
+                                                    No city found.
+                                                </CommandEmpty>
+                                                <CommandGroup>
+                                                    {cities.map(city => (
+                                                        <CommandItem
+                                                            value={city.label}
+                                                            key={city.value}
+                                                            onSelect={() => {
+                                                                form.setValue(
+                                                                    "location",
+                                                                    city.value
+                                                                );
+                                                            }}
+                                                        >
+                                                            {city.label}
+                                                            <Check
+                                                                className={cn(
+                                                                    "ml-auto",
+                                                                    city.value ===
+                                                                        field.value
+                                                                        ? "opacity-100"
+                                                                        : "opacity-0"
+                                                                )}
+                                                            />
+                                                        </CommandItem>
+                                                    ))}
+                                                </CommandGroup>
+                                            </CommandList>
+                                        </Command>
+                                    </PopoverContent>
+                                </Popover>
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -159,12 +261,65 @@ export function CreateProfileForm() {
                         render={({ field }) => (
                             <FormItem className="w-full">
                                 <FormLabel>Home</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        placeholder="Where are you from?"
-                                        {...field}
-                                    />
-                                </FormControl>
+                                <Popover>
+                                    <PopoverTrigger asChild>
+                                        <FormControl>
+                                            <Button
+                                                variant="outline"
+                                                role="combobox"
+                                                className={cn(
+                                                    "w-full justify-between",
+                                                    !field.value &&
+                                                        "text-muted-foreground"
+                                                )}
+                                            >
+                                                {field.value
+                                                    ? cities.find(
+                                                          city =>
+                                                              city.value ===
+                                                              field.value
+                                                      )?.label
+                                                    : "Where are you from?"}
+                                                <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                            </Button>
+                                        </FormControl>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-full p-0">
+                                        <Command>
+                                            <CommandInput placeholder="Search city..." />
+                                            <CommandList>
+                                                <CommandEmpty>
+                                                    No city found.
+                                                </CommandEmpty>
+                                                <CommandGroup>
+                                                    {cities.map(city => (
+                                                        <CommandItem
+                                                            value={city.label}
+                                                            key={city.value}
+                                                            onSelect={() => {
+                                                                form.setValue(
+                                                                    "from",
+                                                                    city.value
+                                                                );
+                                                            }}
+                                                        >
+                                                            {city.label}
+                                                            <Check
+                                                                className={cn(
+                                                                    "ml-auto",
+                                                                    city.value ===
+                                                                        field.value
+                                                                        ? "opacity-100"
+                                                                        : "opacity-0"
+                                                                )}
+                                                            />
+                                                        </CommandItem>
+                                                    ))}
+                                                </CommandGroup>
+                                            </CommandList>
+                                        </Command>
+                                    </PopoverContent>
+                                </Popover>
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -176,13 +331,66 @@ export function CreateProfileForm() {
                         name="music"
                         render={({ field }) => (
                             <FormItem className="w-full">
-                                <FormLabel>Music</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        placeholder="Your favourite song"
-                                        {...field}
-                                    />
-                                </FormControl>
+                                <FormLabel>Song</FormLabel>
+                                <Popover>
+                                    <PopoverTrigger asChild>
+                                        <FormControl>
+                                            <Button
+                                                variant="outline"
+                                                role="combobox"
+                                                className={cn(
+                                                    "w-full justify-between",
+                                                    !field.value &&
+                                                        "text-muted-foreground"
+                                                )}
+                                            >
+                                                {field.value
+                                                    ? songs.find(
+                                                          song =>
+                                                              song.value ===
+                                                              field.value
+                                                      )?.label
+                                                    : "Your favourite song"}
+                                                <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                            </Button>
+                                        </FormControl>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-full p-0">
+                                        <Command>
+                                            <CommandInput placeholder="Search song..." />
+                                            <CommandList>
+                                                <CommandEmpty>
+                                                    No song found.
+                                                </CommandEmpty>
+                                                <CommandGroup>
+                                                    {songs.map(song => (
+                                                        <CommandItem
+                                                            value={song.label}
+                                                            key={song.value}
+                                                            onSelect={() => {
+                                                                form.setValue(
+                                                                    "music",
+                                                                    song.value
+                                                                );
+                                                            }}
+                                                        >
+                                                            {song.label}
+                                                            <Check
+                                                                className={cn(
+                                                                    "ml-auto",
+                                                                    song.value ===
+                                                                        field.value
+                                                                        ? "opacity-100"
+                                                                        : "opacity-0"
+                                                                )}
+                                                            />
+                                                        </CommandItem>
+                                                    ))}
+                                                </CommandGroup>
+                                            </CommandList>
+                                        </Command>
+                                    </PopoverContent>
+                                </Popover>
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -193,12 +401,65 @@ export function CreateProfileForm() {
                         render={({ field }) => (
                             <FormItem className="w-full">
                                 <FormLabel>Movie</FormLabel>
-                                <FormControl>
-                                    <Input
-                                        placeholder="Your favourite movie"
-                                        {...field}
-                                    />
-                                </FormControl>
+                                <Popover>
+                                    <PopoverTrigger asChild>
+                                        <FormControl>
+                                            <Button
+                                                variant="outline"
+                                                role="combobox"
+                                                className={cn(
+                                                    "w-full justify-between",
+                                                    !field.value &&
+                                                        "text-muted-foreground"
+                                                )}
+                                            >
+                                                {field.value
+                                                    ? movies.find(
+                                                          movie =>
+                                                              movie.value ===
+                                                              field.value
+                                                      )?.label
+                                                    : "Your favourite movie"}
+                                                <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                            </Button>
+                                        </FormControl>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-full p-0">
+                                        <Command>
+                                            <CommandInput placeholder="Search movie..." />
+                                            <CommandList>
+                                                <CommandEmpty>
+                                                    No movie found.
+                                                </CommandEmpty>
+                                                <CommandGroup>
+                                                    {movies.map(movie => (
+                                                        <CommandItem
+                                                            value={movie.label}
+                                                            key={movie.value}
+                                                            onSelect={() => {
+                                                                form.setValue(
+                                                                    "movie",
+                                                                    movie.value
+                                                                );
+                                                            }}
+                                                        >
+                                                            {movie.label}
+                                                            <Check
+                                                                className={cn(
+                                                                    "ml-auto",
+                                                                    movie.value ===
+                                                                        field.value
+                                                                        ? "opacity-100"
+                                                                        : "opacity-0"
+                                                                )}
+                                                            />
+                                                        </CommandItem>
+                                                    ))}
+                                                </CommandGroup>
+                                            </CommandList>
+                                        </Command>
+                                    </PopoverContent>
+                                </Popover>
                                 <FormMessage />
                             </FormItem>
                         )}
@@ -211,7 +472,10 @@ export function CreateProfileForm() {
                         <FormItem>
                             <FormLabel>Gender</FormLabel>
                             <FormControl>
-                                <Select {...field}>
+                                <Select
+                                    onValueChange={field.onChange}
+                                    value={field.value}
+                                >
                                     <SelectTrigger className="w-full">
                                         <SelectValue placeholder="Select a gender" />
                                     </SelectTrigger>
@@ -226,7 +490,7 @@ export function CreateProfileForm() {
                                                     )
                                                 }
                                             >
-                                                Man
+                                                Male
                                             </SelectItem>
                                             <SelectItem
                                                 value="woman"
@@ -237,7 +501,7 @@ export function CreateProfileForm() {
                                                     )
                                                 }
                                             >
-                                                Woman
+                                                Female
                                             </SelectItem>
                                         </SelectGroup>
                                     </SelectContent>
@@ -268,12 +532,21 @@ export function CreateProfileForm() {
                         </FormItem>
                     )}
                 />
+                {error !== "" && (
+                    <div className="flex justify-center items-center p-2 border border-red-500 rounded-lg text-sm text-red-500 bg-red-100 bg-opacity-50">
+                        {error}
+                    </div>
+                )}
                 <div className="flex flex-col space-y-2 w-full justify-center">
                     <Button
                         type="submit"
                         className="rounded-full"
+                        disabled={loading}
                     >
-                        Create Anonymous Profile
+                        {loading && (
+                            <Loader2Icon className="h-4 w-4 animate-spin" />
+                        )}
+                        <span>Create Anonymous Profile</span>
                     </Button>
                     <div className="flex space-x-1 text-sm justify-center">
                         <span>Already have an account?</span>

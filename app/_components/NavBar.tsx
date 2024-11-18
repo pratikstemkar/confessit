@@ -39,7 +39,7 @@ const NavBar = () => {
                     <span
                         className={`text-xl lg:text-3xl font-bold tracking-tighter ${chivo.className}`}
                     >
-                        Spill It
+                        {process.env.NEXT_PUBLIC_APP_NAME}
                     </span>
                 </Link>
                 <div className="flex space-x-2 items-center">
@@ -68,7 +68,7 @@ const NavBar = () => {
                         <>
                             <CreatePostDialog />
                             <Link
-                                href="/users/red-panda"
+                                href={`/users/${session?.user.username}`}
                                 title="Your Profile"
                             >
                                 <Avatar className="h-9 w-9">
