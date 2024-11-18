@@ -16,7 +16,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { usePathname } from "next/navigation";
+import { Loader2Icon } from "lucide-react";
+import { useState } from "react";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 const formSchema = z.object({
     username: z.string().min(4, {
@@ -28,17 +31,19 @@ const formSchema = z.object({
 });
 
 export function LoginForm() {
-    const pathname = usePathname();
+    const [loading, setLoading] = useState(false);
+    const error = useSearchParams().get("error");
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            username: pathname,
+            username: "",
             password: "",
         },
     });
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        setLoading(true);
         await signIn("credentials", {
             username: values.username,
             password: values.password,
@@ -53,6 +58,7 @@ export function LoginForm() {
                 },
             });
         });
+        setLoading(false);
     };
 
     return (
@@ -94,13 +100,31 @@ export function LoginForm() {
                         </FormItem>
                     )}
                 />
-                <div className="flex justify-center">
+                {error !== undefined && error !== null && (
+                    <div className="flex justify-center items-center py-2 border border-red-500 rounded-lg text-sm text-red-500 bg-red-100 bg-opacity-50">
+                        {error}
+                    </div>
+                )}
+                <div className="flex flex-col space-y-1 items-center justify-center">
                     <Button
                         type="submit"
                         className="rounded-full"
+                        disabled={loading}
                     >
-                        Login
+                        {loading && (
+                            <Loader2Icon className="h-4 w-4 animate-spin" />
+                        )}
+                        <span>Login</span>
                     </Button>
+                    <div className="flex space-x-1 text-sm">
+                        <span>Don&apos;t have an anonymous profile?</span>
+                        <Link
+                            href="/create-profile"
+                            className="underline underline-offset-4"
+                        >
+                            Create
+                        </Link>
+                    </div>
                 </div>
             </form>
         </Form>

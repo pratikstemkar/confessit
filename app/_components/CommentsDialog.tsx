@@ -6,7 +6,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
-import { MessageCircleIcon, SendIcon } from "lucide-react";
+import { MessageSquareIcon, SendIcon } from "lucide-react";
 import Comment from "./Comment";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
@@ -20,7 +20,7 @@ const CommentsDialog = () => {
                     className="rounded-full"
                     title="Comments"
                 >
-                    <MessageCircleIcon className="h-4 w-4" />
+                    <MessageSquareIcon className="h-4 w-4" />
                 </Button>
             </DialogTrigger>
             <DialogContent className="w-11/12 lg:w-full rounded-3xl lg:rounded-3xl">

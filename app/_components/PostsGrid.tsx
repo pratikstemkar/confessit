@@ -5,6 +5,7 @@ import PostCard from "./PostCard";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Teko } from "next/font/google";
+import PostSkeleton from "./PostSkeleton";
 
 const teko = Teko({
     subsets: ["latin"],
@@ -18,7 +19,7 @@ const PostsGrid = () => {
 
     return (
         <>
-            {status === "authenticated" ? (
+            {status === "authenticated" && (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                     <PostCard />
                     <PostCard />
@@ -27,7 +28,8 @@ const PostsGrid = () => {
                     <PostCard />
                     <PostCard />
                 </div>
-            ) : (
+            )}
+            {status === "unauthenticated" && (
                 <div className="flex flex-col w-full space-y-5 justify-center mt-28">
                     <div className="text-center">
                         <h1
@@ -63,6 +65,14 @@ const PostsGrid = () => {
                             </Link>
                         </Button>
                     </div>
+                </div>
+            )}
+            {status === "loading" && (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                    <PostSkeleton />
+                    <PostSkeleton />
+                    <PostSkeleton />
+                    <PostSkeleton />
                 </div>
             )}
         </>

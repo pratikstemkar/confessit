@@ -8,7 +8,6 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { BookmarkIcon, EllipsisIcon, Trash2Icon } from "lucide-react";
-import ReportDialog from "./ReportDialog";
 
 const PostMenu = () => {
     return (
@@ -22,18 +21,12 @@ const PostMenu = () => {
                     <EllipsisIcon className="h-4 w-4" />
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
-                <DropdownMenuItem className="hover:cursor-pointer">
+            <DropdownMenuContent className="rounded-3xl mr-2 lg:mr-0">
+                <DropdownMenuItem className="hover:cursor-pointer rounded-t-3xl">
                     <BookmarkIcon className="h-4 w-4" />
                     <span>Bookmark</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem
-                    className="hover:cursor-pointer"
-                    onSelect={e => e.preventDefault()}
-                >
-                    <ReportDialog />
-                </DropdownMenuItem>
-                <DropdownMenuItem className="text-red-500 hover:cursor-pointer">
+                <DropdownMenuItem className="text-red-500 hover:cursor-pointer rounded-b-3xl">
                     <Trash2Icon className="h-4 w-4" />
                     <span>Delete</span>
                 </DropdownMenuItem>
