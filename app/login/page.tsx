@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import { Teko } from "next/font/google";
 import { LoginForm } from "../_components/LoginForm";
+import { Suspense } from "react";
+import { Loader2Icon } from "lucide-react";
 
 export const metadata: Metadata = {
     title: "Login - Spill It",
@@ -19,7 +21,15 @@ const LoginPage = () => {
                 Login to your Anonymous Profile
             </h1>
             <div className="max-w-lg m-auto border rounded-3xl p-5 mt-5">
-                <LoginForm />
+                <Suspense
+                    fallback={
+                        <>
+                            <Loader2Icon className="animate-spin" />
+                        </>
+                    }
+                >
+                    <LoginForm />
+                </Suspense>
             </div>
         </main>
     );
