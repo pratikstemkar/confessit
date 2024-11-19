@@ -13,7 +13,7 @@ const LogoutButton = (props: { username: string }) => {
         <Button
             variant="ghost"
             size="icon"
-            className={cn("rounded-full", {
+            className={cn("rounded-full text-red-500", {
                 hidden:
                     status === "unauthenticated" ||
                     status === "loading" ||

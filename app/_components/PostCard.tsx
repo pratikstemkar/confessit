@@ -1,9 +1,12 @@
+"use client";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import Emoji from "./Emoji";
 import PostMenu from "./PostMenu";
 import CommentsDialog from "./CommentsDialog";
 import Link from "next/link";
+import { toast } from "sonner";
 
 const PostCard = () => {
     return (
@@ -83,6 +86,7 @@ const PostCard = () => {
                             variant="ghost"
                             className="rounded-full"
                             title="Funny"
+                            onClick={() => toast("Haha")}
                         >
                             <Emoji
                                 symbol="😂"

@@ -18,14 +18,14 @@ const LoginPage = () => {
     return (
         <main className="max-w-5xl m-auto mt-10 px-5 lg:px-0">
             <h1 className={`${teko.className} text-4xl font-bold text-center`}>
-                Login to your Anonymous Profile
+                Login
             </h1>
-            <div className="max-w-lg m-auto border rounded-3xl p-5 mt-5">
+            <div className="max-w-xs m-auto border rounded-3xl p-5 mt-5">
                 <Suspense
                     fallback={
-                        <>
+                        <div className="m-auto">
                             <Loader2Icon className="animate-spin" />
-                        </>
+                        </div>
                     }
                 >
                     <LoginForm />

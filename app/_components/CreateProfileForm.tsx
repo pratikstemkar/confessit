@@ -69,11 +69,21 @@ const formSchema = z.object({
         .max(50, {
             message: "Bio must be atmax 50 characters.",
         }),
-    location: z.string().min(3),
-    from: z.string().min(3),
-    music: z.string().min(3),
-    movie: z.string().min(3),
-    gender: z.string().min(3),
+    location: z.string().min(3, {
+        message: "City must be atleast 3 characters.",
+    }),
+    from: z.string().min(3, {
+        message: "City must be atleast 3 characters.",
+    }),
+    music: z.string().min(3, {
+        message: "Song must be atleast 3 characters.",
+    }),
+    movie: z.string().min(3, {
+        message: "Movie must be atleast 3 characters.",
+    }),
+    gender: z.string().min(3, {
+        message: "Gender must be atleast 3 characters.",
+    }),
     password: z
         .string()
         .min(6, {
@@ -148,6 +158,7 @@ export function CreateProfileForm() {
                             <div className="flex space-x-2">
                                 <FormControl>
                                     <Input
+                                        className="text-sm"
                                         placeholder="Enter a anonymous username or generate it"
                                         {...field}
                                     />
@@ -177,6 +188,7 @@ export function CreateProfileForm() {
                             <FormLabel>Bio</FormLabel>
                             <FormControl>
                                 <Input
+                                    className="text-sm"
                                     placeholder="Tell us something about yourself"
                                     {...field}
                                 />
@@ -190,7 +202,7 @@ export function CreateProfileForm() {
                         control={form.control}
                         name="location"
                         render={({ field }) => (
-                            <FormItem className="w-full">
+                            <FormItem className="w-1/2">
                                 <FormLabel>Current City</FormLabel>
                                 <Popover>
                                     <PopoverTrigger asChild>
@@ -199,7 +211,7 @@ export function CreateProfileForm() {
                                                 variant="outline"
                                                 role="combobox"
                                                 className={cn(
-                                                    "w-full justify-between",
+                                                    "w-full justify-between truncate font-normal",
                                                     !field.value &&
                                                         "text-muted-foreground"
                                                 )}
@@ -259,7 +271,7 @@ export function CreateProfileForm() {
                         control={form.control}
                         name="from"
                         render={({ field }) => (
-                            <FormItem className="w-full">
+                            <FormItem className="w-1/2">
                                 <FormLabel>Home</FormLabel>
                                 <Popover>
                                     <PopoverTrigger asChild>
@@ -268,7 +280,7 @@ export function CreateProfileForm() {
                                                 variant="outline"
                                                 role="combobox"
                                                 className={cn(
-                                                    "w-full justify-between",
+                                                    "w-full justify-between truncate font-normal",
                                                     !field.value &&
                                                         "text-muted-foreground"
                                                 )}
@@ -330,7 +342,7 @@ export function CreateProfileForm() {
                         control={form.control}
                         name="music"
                         render={({ field }) => (
-                            <FormItem className="w-full">
+                            <FormItem className="w-1/2">
                                 <FormLabel>Song</FormLabel>
                                 <Popover>
                                     <PopoverTrigger asChild>
@@ -339,7 +351,7 @@ export function CreateProfileForm() {
                                                 variant="outline"
                                                 role="combobox"
                                                 className={cn(
-                                                    "w-full justify-between",
+                                                    "w-full justify-between truncate font-normal",
                                                     !field.value &&
                                                         "text-muted-foreground"
                                                 )}
@@ -399,7 +411,7 @@ export function CreateProfileForm() {
                         control={form.control}
                         name="movie"
                         render={({ field }) => (
-                            <FormItem className="w-full">
+                            <FormItem className="w-1/2">
                                 <FormLabel>Movie</FormLabel>
                                 <Popover>
                                     <PopoverTrigger asChild>
@@ -408,7 +420,7 @@ export function CreateProfileForm() {
                                                 variant="outline"
                                                 role="combobox"
                                                 className={cn(
-                                                    "w-full justify-between",
+                                                    "w-full justify-between truncate font-normal",
                                                     !field.value &&
                                                         "text-muted-foreground"
                                                 )}
@@ -519,6 +531,7 @@ export function CreateProfileForm() {
                             <FormLabel>Password</FormLabel>
                             <FormControl>
                                 <Input
+                                    className="text-sm"
                                     placeholder="Enter a password"
                                     type="password"
                                     {...field}
@@ -533,7 +546,7 @@ export function CreateProfileForm() {
                     )}
                 />
                 {error !== "" && (
-                    <div className="flex justify-center items-center p-2 border border-red-500 rounded-lg text-sm text-red-500 bg-red-100 bg-opacity-50">
+                    <div className="flex justify-center items-center p-2 border border-red-500 rounded-lg text-sm text-red-500 bg-opacity-50">
                         {error}
                     </div>
                 )}

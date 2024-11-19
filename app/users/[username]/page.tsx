@@ -25,9 +25,12 @@ const UserPage = async ({ params }: { params: { username: string } }) => {
                         </Avatar>
                         <div className="flex flex-col space-y-2">
                             <div className="flex flex-col">
-                                <span className="text-xl font-bold">
-                                    {params.username}
-                                </span>
+                                <div className="flex items-center justify-between">
+                                    <span className="text-xl font-bold truncate flex-shrink-0">
+                                        {params.username}
+                                    </span>
+                                    <LogoutButton username={params.username} />
+                                </div>
                                 <span className="text-sm text-muted-foreground line-clamp-2">
                                     {foundUser?.user.bio}
                                 </span>
@@ -56,7 +59,6 @@ const UserPage = async ({ params }: { params: { username: string } }) => {
                             </div>
                         </div>
                     </div>
-                    <LogoutButton username={params.username} />
                 </div>
                 <Separator />
                 <section className="flex flex-col space-y-2">

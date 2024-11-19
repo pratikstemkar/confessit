@@ -59,6 +59,7 @@ export function LoginForm() {
             });
         });
         setLoading(false);
+        toast("Login Successful!");
     };
 
     return (
@@ -75,6 +76,7 @@ export function LoginForm() {
                             <FormLabel>Username</FormLabel>
                             <FormControl>
                                 <Input
+                                    className="text-sm"
                                     placeholder="Enter your username"
                                     {...field}
                                 />
@@ -91,6 +93,7 @@ export function LoginForm() {
                             <FormLabel>Password</FormLabel>
                             <FormControl>
                                 <Input
+                                    className="text-sm"
                                     placeholder="Enter your password"
                                     type="password"
                                     {...field}
@@ -101,7 +104,7 @@ export function LoginForm() {
                     )}
                 />
                 {error !== undefined && error !== null && (
-                    <div className="flex justify-center items-center p-2 border border-red-500 rounded-lg text-sm text-red-500 bg-red-100 bg-opacity-50">
+                    <div className="flex justify-center items-center p-2 border border-red-500 rounded-lg text-sm text-red-500 bg-opacity-50">
                         {error}
                     </div>
                 )}
