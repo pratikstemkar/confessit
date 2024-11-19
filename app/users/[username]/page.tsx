@@ -15,15 +15,15 @@ const UserPage = async ({ params }: { params: { username: string } }) => {
     return (
         <main className="max-w-5xl m-auto mt-10 px-5 lg:px-0">
             <div className="flex flex-col space-y-5">
-                <div className="flex justify-between">
-                    <div className="flex space-x-5 items-center">
+                <div className="flex">
+                    <div className="flex space-x-5 items-center w-full">
                         <Avatar className="h-28 w-28">
                             <AvatarImage src={foundUser?.user.avatar} />
                             <AvatarFallback>
                                 {foundUser?.user.username}
                             </AvatarFallback>
                         </Avatar>
-                        <div className="flex flex-col space-y-2">
+                        <div className="flex w-full flex-col space-y-2">
                             <div className="flex flex-col">
                                 <div className="flex items-center justify-between">
                                     <span className="text-xl font-bold truncate flex-shrink-0">

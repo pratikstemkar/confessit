@@ -10,7 +10,7 @@ import { toast } from "sonner";
 
 const PostCard = () => {
     return (
-        <div className={`px-4 py-4 rounded-3xl border hover:cursor-pointer`}>
+        <div className={`px-4 py-4 rounded-3xl border`}>
             <div className="flex flex-col space-y-2">
                 <div className="flex justify-between items-center">
                     <div className="flex space-x-2 items-center">
@@ -18,6 +18,7 @@ const PostCard = () => {
                             href="/users/red-panda"
                             className="flex space-x-1 items-center"
                             scroll={false}
+                            title="Visit Profile"
                         >
                             <Avatar>
                                 <AvatarImage
@@ -44,6 +45,7 @@ const PostCard = () => {
                 <div>
                     <Link
                         href="/posts/1"
+                        title="Open Post"
                         passHref
                     >
                         <span className="font-bold tracking-tighter text-lg lg:text-xl">

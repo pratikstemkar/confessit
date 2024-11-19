@@ -49,7 +49,9 @@ export default function RootLayout({
                         </div>
 
                         <div>
-                            <Toaster />
+                            <div className="flex justify-center items-center w-full bg-red-500">
+                                <Toaster />
+                            </div>
                             <Footer />
                         </div>
                     </AuthProvider>
