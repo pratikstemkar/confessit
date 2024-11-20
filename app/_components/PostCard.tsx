@@ -4,81 +4,102 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import Emoji from "./Emoji";
 import PostMenu from "./PostMenu";
-// import CommentsDialog from "./CommentsDialog";
 import Link from "next/link";
 import { toast } from "sonner";
+import { formatDate, timeAgo } from "@/lib/utils";
 
-const PostCard = () => {
+interface Reaction {
+    hot: number;
+    funny: number;
+    shock: number;
+}
+
+interface Author {
+    _id: string;
+    username: string;
+    avatar: string;
+}
+
+interface Comment {
+    user: string;
+    text: string;
+    createdAt: string;
+}
+
+export interface Post {
+    reactions: Reaction;
+    _id: string;
+    title: string;
+    content: string;
+    author: Author;
+    mood: "excited" | "happy" | "sad" | "angry" | "shocked" | "neutral";
+    comments: Comment[];
+    reports: string[];
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+}
+
+const PostCard = (props: { post: Post }) => {
     return (
-        <div className={`px-4 py-4 rounded-3xl border`}>
+        <div
+            className={`px-4 py-4 rounded-3xl border hover:shadow-xl hover:scale-105 ease-in-out duration-300`}
+        >
             <div className="flex flex-col space-y-2">
                 <div className="flex justify-between items-center">
-                    <div className="flex space-x-2 items-center">
+                    <div className="flex flex-wrap gap-x-2 items-center">
                         <Link
-                            href="/users/red-panda"
+                            href={`/users/${props.post.author.username}`}
                             className="flex space-x-1 items-center"
                             scroll={false}
                             title="Visit Profile"
                         >
                             <Avatar>
                                 <AvatarImage
-                                    src="/avatars/woman/8.png"
+                                    src={props.post.author.avatar}
                                     className="h-9 w-9"
                                 />
                                 <AvatarFallback>PFP</AvatarFallback>
                             </Avatar>
                             <span className="font-semibold text-md lg:text-lg">
-                                red-panda
+                                {props.post.author.username}
                             </span>
                         </Link>
                         <span
                             className="text-xs text-muted-foreground hover:cursor-pointer hover:text-current"
-                            title="18th November, 2024 at 12:34 PM"
+                            title={formatDate(props.post.createdAt)}
                         >
-                            at 12:24 PM
+                            {timeAgo(props.post.createdAt)}
                         </span>
                     </div>
                     <div>
-                        <PostMenu />
+                        <PostMenu authorId={props.post.author._id} />
                     </div>
                 </div>
-                <div>
-                    <Link
-                        href="/posts/1"
-                        title="Open Post"
-                        passHref
-                    >
+                <Link
+                    href={`/posts/${props.post._id}`}
+                    title="Open Post"
+                    passHref
+                >
+                    <div>
                         <span className="font-bold tracking-tighter text-lg lg:text-xl">
-                            What happened that day?
+                            {props.post.title}
                         </span>
                         <div>
                             <p className="text-justify line-clamp-4">
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit. Necessitatibus voluptatibus
-                                voluptatum asperiores dolorum placeat eligendi
-                                nemo odio, distinctio minima labore similique
-                                facilis, tempora cumque, possimus voluptatem a
-                                veritatis quo esse.
+                                {props.post.content}
                             </p>
                         </div>
-                    </Link>
-                </div>
+                    </div>
+                </Link>
                 <div className="flex justify-between">
                     <div className="flex flex-wrap gap-2">
-                        {/* <Button
-                        variant="ghost"
-                        className="rounded-full hover:border border-primary"
-                    >
-                        <Emoji
-                            symbol="❤️"
-                            label="heart"
-                        />
-                    </Button> */}
                         <Button
                             variant="ghost"
                             className="rounded-full"
                             title="Hot"
                         >
+                            <span>{props.post.reactions.hot}</span>
                             <Emoji
                                 symbol="🔥"
                                 label="fire"
@@ -90,6 +111,7 @@ const PostCard = () => {
                             title="Funny"
                             onClick={() => toast("Haha")}
                         >
+                            <span>{props.post.reactions.funny}</span>
                             <Emoji
                                 symbol="😂"
                                 label="funny"
@@ -100,12 +122,12 @@ const PostCard = () => {
                             className="rounded-full"
                             title="Shock"
                         >
+                            <span>{props.post.reactions.shock}</span>
                             <Emoji
                                 symbol="😱"
                                 label="scare"
                             />
                         </Button>
-                        {/* <CommentsDialog /> */}
                     </div>
                 </div>
             </div>

@@ -1,5 +1,4 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import PostCard from "./PostCard";
 
 const ProfileTabs = () => {
     return (
@@ -23,18 +22,12 @@ const ProfileTabs = () => {
             </TabsList>
             <TabsContent value="posts">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                    <PostCard />
-                    <PostCard />
-                    <PostCard />
+                    <>No posts</>
                 </div>
             </TabsContent>
             <TabsContent value="bookmarks">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                    <PostCard />
-                    <PostCard />
-                    <PostCard />
-                    <PostCard />
-                    <PostCard />
+                    <>No posts</>
                 </div>
             </TabsContent>
         </Tabs>

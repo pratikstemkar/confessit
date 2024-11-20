@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Teko } from "next/font/google";
 import PostSkeleton from "./PostSkeleton";
+import { useEffect, useState } from "react";
+import { getPosts, PostData } from "@/lib/utils";
 
 const teko = Teko({
     subsets: ["latin"],
@@ -17,16 +19,36 @@ const PostsGrid = () => {
         required: false,
     });
 
+    const [data, setData] = useState<PostData>();
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchPosts = async () => {
+            try {
+                const postsData = await getPosts();
+                setData(postsData);
+            } catch (error) {
+                setError("Error loading posts" + error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchPosts();
+    }, []);
+
     return (
         <>
             {status === "authenticated" && (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                    <PostCard />
-                    <PostCard />
-                    <PostCard />
-                    <PostCard />
-                    <PostCard />
-                    <PostCard />
+                    {data?.posts?.map((post, index) => (
+                        <PostCard
+                            key={index}
+                            post={post}
+                        />
+                    ))}
+                    {/* {JSON.stringify(data?.posts)} */}
                 </div>
             )}
             {status === "unauthenticated" && (
@@ -67,7 +89,7 @@ const PostsGrid = () => {
                     </div>
                 </div>
             )}
-            {status === "loading" && (
+            {(status === "loading" || loading) && (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                     <PostSkeleton />
                     <PostSkeleton />
@@ -75,6 +97,7 @@ const PostsGrid = () => {
                     <PostSkeleton />
                 </div>
             )}
+            {error && <>{error}</>}
         </>
     );
 };

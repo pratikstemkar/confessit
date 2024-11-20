@@ -8,16 +8,24 @@ import {
 } from "@/components/ui/dialog";
 import { PlusIcon } from "lucide-react";
 import { CreatePostForm } from "./CreatePostForm";
+import { useState } from "react";
 
 const CreatePostDialog = () => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const closeDialog = () => {
+        setIsOpen(false);
+    };
+
     return (
-        <Dialog>
+        <Dialog open={isOpen}>
             <DialogTrigger>
                 <Button
                     variant="ghost"
                     size="icon"
                     className="rounded-full"
                     title="Create Post"
+                    onClick={() => setIsOpen(true)}
                 >
                     <PlusIcon className="h-4 w-4" />
                 </Button>
@@ -27,7 +35,7 @@ const CreatePostDialog = () => {
                     <DialogTitle>Create Post</DialogTitle>
                 </DialogHeader>
                 <div>
-                    <CreatePostForm />
+                    <CreatePostForm closeDialog={closeDialog} />
                 </div>
             </DialogContent>
         </Dialog>

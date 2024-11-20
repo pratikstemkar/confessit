@@ -1,3 +1,5 @@
+import { Post } from "@/app/_components/PostCard";
+import { format, formatDistanceToNow } from "date-fns";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import {
@@ -41,4 +43,43 @@ export async function getUser(username: string) {
     }
 
     return res.json();
+}
+
+export async function getUsers() {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/users`, {
+        next: { revalidate: 60 },
+    });
+    if (!res.ok) {
+        throw new Error("Users not Found!");
+    }
+
+    return res.json();
+}
+
+export interface PostData {
+    message: string;
+    posts: Array<Post>;
+}
+
+export async function getPosts(): Promise<PostData> {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/posts`, {
+        next: { revalidate: 60 },
+    });
+    if (!res.ok) {
+        throw new Error("Posts not Found!");
+    }
+
+    return res.json();
+}
+
+export function timeAgo(date: string | Date): string {
+    const parsedDate = new Date(date);
+
+    return formatDistanceToNow(parsedDate) + " ago";
+}
+
+export function formatDate(dateString: string): string {
+    const date = new Date(dateString);
+
+    return format(date, "MMMM dd, yyyy, hh:mm a");
 }
