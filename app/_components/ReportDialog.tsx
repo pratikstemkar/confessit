@@ -6,7 +6,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { FlagIcon } from "lucide-react";
-import { CreatePostForm } from "./CreatePostForm";
+// import { CreatePostForm } from "./CreatePostForm";
 
 const ReportDialog = () => {
     return (
@@ -21,9 +21,7 @@ const ReportDialog = () => {
                 <DialogHeader>
                     <DialogTitle>Report a Post</DialogTitle>
                 </DialogHeader>
-                <div>
-                    <CreatePostForm />
-                </div>
+                <div>{/* <CreatePostForm /> */}</div>
             </DialogContent>
         </Dialog>
     );
