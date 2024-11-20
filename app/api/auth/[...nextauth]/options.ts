@@ -60,6 +60,8 @@ export const options: NextAuthOptions = {
                     music: token.music,
                     movie: token.movie,
                     avatar: token.avatar,
+                    bookmark: token.bookmark,
+                    roles: token.roles,
                 },
             };
         },
@@ -73,6 +75,8 @@ export const options: NextAuthOptions = {
                 token.music = session?.music;
                 token.movie = session?.movie;
                 token.avatar = session?.avatar;
+                token.bookmarks = session?.bookmarks;
+                token.roles = session?.roles;
             }
             if (user) {
                 return {
@@ -85,6 +89,8 @@ export const options: NextAuthOptions = {
                     from: user.from,
                     music: user.music,
                     movie: user.movie,
+                    bookmarks: user.bookmarks,
+                    roles: user.roles,
                 };
             }
             await dbConnect();

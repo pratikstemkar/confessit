@@ -8,7 +8,7 @@ import { notFound } from "next/navigation";
 
 const UserPage = async ({ params }: { params: { username: string } }) => {
     const foundUser = await getUser(params.username);
-    if (!foundUser) {
+    if (!foundUser.user) {
         notFound();
     }
 

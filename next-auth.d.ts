@@ -13,6 +13,8 @@ declare module "next-auth" {
             music: string;
             movie: string;
             avatar: string;
+            bookmarks: Array<string>;
+            roles: Array<string>;
         } & DefaultSession["user"];
     }
 
@@ -25,5 +27,7 @@ declare module "next-auth" {
         music: string;
         movie: string;
         avatar: string;
+        bookmarks: Array<string>;
+        roles: Array<string>;
     }
 }

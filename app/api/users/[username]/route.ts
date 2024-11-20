@@ -9,7 +9,7 @@ export async function GET(
     const username = params.username;
     try {
         await dbConnect();
-        const user = await User.findOne({ username: username });
+        const user = await User.findOne({ username }).exec();
         return NextResponse.json(
             { message: "User found!", user },
             { status: 200 }

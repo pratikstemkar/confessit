@@ -22,11 +22,11 @@ const PostMenu = () => {
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="rounded-3xl mr-2 lg:mr-0">
-                <DropdownMenuItem className="hover:cursor-pointer rounded-t-3xl">
+                <DropdownMenuItem className="hover:cursor-pointer rounded-3xl">
                     <BookmarkIcon className="h-4 w-4" />
                     <span>Bookmark</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="text-red-500 hover:cursor-pointer rounded-b-3xl">
+                <DropdownMenuItem className="text-red-500 hover:cursor-pointer rounded-3xl">
                     <Trash2Icon className="h-4 w-4" />
                     <span>Delete</span>
                 </DropdownMenuItem>
