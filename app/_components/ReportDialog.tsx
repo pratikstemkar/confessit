@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
     Dialog,
     DialogContent,
@@ -12,10 +13,13 @@ const ReportDialog = () => {
     return (
         <Dialog>
             <DialogTrigger>
-                <div className="flex space-x-2 items-center">
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    className="rounded-full"
+                >
                     <FlagIcon className="h-4 w-4" />
-                    <span>Report</span>
-                </div>
+                </Button>
             </DialogTrigger>
             <DialogContent className="w-11/12 lg:w-full rounded-3xl lg:rounded-3xl">
                 <DialogHeader>

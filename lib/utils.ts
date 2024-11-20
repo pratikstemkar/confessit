@@ -72,6 +72,20 @@ export async function getPosts(): Promise<PostData> {
     return res.json();
 }
 
+export async function getPost(postId: string) {
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_APP_URL}/api/posts/${postId}`,
+        {
+            next: { revalidate: 60 },
+        }
+    );
+    if (!res.ok) {
+        throw new Error("Post not Found!");
+    }
+
+    return res.json();
+}
+
 export function timeAgo(date: string | Date): string {
     const parsedDate = new Date(date);
 

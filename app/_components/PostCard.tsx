@@ -7,6 +7,7 @@ import PostMenu from "./PostMenu";
 import Link from "next/link";
 import { toast } from "sonner";
 import { formatDate, timeAgo } from "@/lib/utils";
+import ShareButton from "./ShareButton";
 
 interface Reaction {
     hot: number;
@@ -93,7 +94,7 @@ const PostCard = (props: { post: Post }) => {
                     </div>
                 </Link>
                 <div className="flex justify-between">
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-1 lg:gap-2">
                         <Button
                             variant="ghost"
                             className="rounded-full"
@@ -128,6 +129,7 @@ const PostCard = (props: { post: Post }) => {
                                 label="scare"
                             />
                         </Button>
+                        <ShareButton postId={props?.post._id} />
                     </div>
                 </div>
             </div>
