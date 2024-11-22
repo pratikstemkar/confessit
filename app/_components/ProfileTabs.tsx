@@ -6,16 +6,16 @@ const ProfileTabs = () => {
             defaultValue="posts"
             className="w-full"
         >
-            <TabsList className="w-full mb-5">
+            <TabsList className="w-full mb-5 rounded-3xl">
                 <TabsTrigger
                     value="posts"
-                    className="w-full"
+                    className="w-full rounded-l-3xl"
                 >
                     Your Posts
                 </TabsTrigger>
                 <TabsTrigger
                     value="bookmarks"
-                    className="w-full"
+                    className="w-full rounded-r-3xl"
                 >
                     Bookmarks
                 </TabsTrigger>

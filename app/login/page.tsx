@@ -23,8 +23,8 @@ const LoginPage = () => {
             <div className="max-w-xs m-auto border rounded-3xl p-5 mt-5">
                 <Suspense
                     fallback={
-                        <div className="m-auto">
-                            <Loader2Icon className="animate-spin" />
+                        <div className="flex justify-center">
+                            <Loader2Icon className="animate-spin h-6 w-6" />
                         </div>
                     }
                 >
