@@ -97,3 +97,26 @@ export function formatDate(dateString: string): string {
 
     return format(date, "MMMM dd, yyyy, hh:mm a");
 }
+
+export const sendReaction = async (postId: string, reactionType: string) => {
+    try {
+        const response = await fetch(`/api/posts/${postId}/reactions`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ reactionType }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || "Failed to add reaction");
+        }
+
+        return data;
+    } catch (error) {
+        console.error("Error sending reaction:", error);
+        throw error;
+    }
+};

@@ -5,8 +5,7 @@ import { Button } from "@/components/ui/button";
 import Emoji from "./Emoji";
 import PostMenu from "./PostMenu";
 import Link from "next/link";
-import { toast } from "sonner";
-import { formatDate, timeAgo } from "@/lib/utils";
+import { formatDate, sendReaction, timeAgo } from "@/lib/utils";
 import ShareButton from "./ShareButton";
 
 interface Reaction {
@@ -99,6 +98,7 @@ const PostCard = (props: { post: Post }) => {
                             variant="ghost"
                             className="rounded-full"
                             title="Hot"
+                            onClick={() => sendReaction(props.post._id, "hot")}
                         >
                             <span>{props.post.reactions.hot}</span>
                             <Emoji
@@ -110,7 +110,9 @@ const PostCard = (props: { post: Post }) => {
                             variant="ghost"
                             className="rounded-full"
                             title="Funny"
-                            onClick={() => toast("Haha")}
+                            onClick={() =>
+                                sendReaction(props.post._id, "funny")
+                            }
                         >
                             <span>{props.post.reactions.funny}</span>
                             <Emoji
@@ -122,6 +124,9 @@ const PostCard = (props: { post: Post }) => {
                             variant="ghost"
                             className="rounded-full"
                             title="Shock"
+                            onClick={() =>
+                                sendReaction(props.post._id, "shock")
+                            }
                         >
                             <span>{props.post.reactions.shock}</span>
                             <Emoji

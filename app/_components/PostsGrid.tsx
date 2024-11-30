@@ -52,7 +52,7 @@ const PostsGrid = () => {
 
     return (
         <>
-            {status === "authenticated" && (
+            {status === "authenticated" && !loading && (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                     {data?.posts?.map((post, index) => (
                         <PostCard
@@ -62,7 +62,7 @@ const PostsGrid = () => {
                     ))}
                 </div>
             )}
-            {status === "unauthenticated" && (
+            {status === "unauthenticated" && !loading && (
                 <div className="flex flex-col w-full space-y-5 justify-center mt-28">
                     <div className="text-center">
                         <h1
@@ -90,7 +90,7 @@ const PostsGrid = () => {
                     </div>
                     <div className="flex justify-center">
                         <Button
-                            className="rounded-full"
+                            className="rounded-full transition ease-in-out duration-300 hover:scale-110 hover:shadow-lg"
                             asChild
                         >
                             <Link href="/create-profile">
